@@ -5,6 +5,16 @@
     ViewBag.Title = "Product List";
 }
 
+<style>
+    .pro .crud_ {
+        visibility: hidden;
+    }
+
+    .pro:hover .crud {
+        visibility: visible;
+    }
+</style>
+
 <h2>Product List</h2>
 
 <p>
@@ -31,7 +41,7 @@
 
     @foreach (var item in Model)
     {
-        <tr >
+        <tr class="pro_">
             <td>
                 @Html.DisplayFor(modelIte => item.ProductId)
             </td>
@@ -45,9 +55,11 @@
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit","Product", new { id = item.ProductId }, new { @class = "btn btn-success" }) 
-                @Html.ActionLink("Details", "Details", "Product", new { id = item.ProductId }, new { @class = "btn btn-secondary" }) 
-                @Html.ActionLink("Delete", "Delete", "Product", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+                <span id="crud_" style="visibility: hidden;">
+                    @Html.ActionLink("Edit", "Edit", "Product", new { id = item.ProductId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Details", "Details", "Product", new { id = item.ProductId }, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Delete", "Delete", "Product", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+                </span>
             </td>
         </tr>
     }
@@ -67,3 +79,28 @@
         }
     </ul>
 </nav>
+
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+       
+        var rows = document.querySelectorAll('.pro_');
+
+        
+        rows.forEach(function (row) {
+            
+            var crudSpan = row.querySelector('#crud_');
+
+            
+            row.addEventListener('mouseover', function () {
+                crudSpan.style.visibility = 'visible'; // Show the span
+            });
+
+            
+            row.addEventListener('mouseout', function () {
+                crudSpan.style.visibility = 'hidden'; // Hide the span
+            });
+        });
+    });
+</script>
