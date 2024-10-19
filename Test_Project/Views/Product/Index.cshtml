@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Test_Project.Models.ProductCategoryViewModel>
+
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h2>Product List</h2>
+
+<p>
+    @Html.ActionLink("Add New Product", "Create","Product", new { @class = "btn btn-success " })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            CRUD
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td>
+                @Html.DisplayFor(modelIte => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelIem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit","Product", new { id = item.ProductId }, new { @class = "btn btn-success" }) 
+                @Html.ActionLink("Details", "Details", "Product", new { id = item.ProductId }, new { @class = "btn btn-secondary" }) 
+                @Html.ActionLink("Delete", "Delete", "Product", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+@{
+    int totalPages = (int)Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize);
+}
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+
+        }
+    </ul>
+</nav>
